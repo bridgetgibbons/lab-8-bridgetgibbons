@@ -9,3 +9,38 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+##Load tidyverse, read in data
+
+```{r}
+library(tidyverse)
+
+salmon <- read_csv("salmon_edited.csv")
+```
+
+##Explore data
+
+```{r}
+salmon_scatter <- ggplot(salmon, aes(x = year, y = salmon_fresh)) +
+  geom_point()
+
+salmon_scatter
+
+#Overall, the data looks linear. Something seems to have happened around 2004 and 2013 that is non-linear
+```
+
+##Linear regression
+
+```{r}
+salmon_model <- lm(salmon_fresh ~ year, data = salmon)
+
+salmon_model
+
+```
+
+Imports(tons) = -14982940 + 7550(Year)
+
+Slope means the change in salmon imports over time in years.
+Y intercept is the initial value for year 0. That's concerning because it is finding the intercept at year 0 instead of during the first year of the data set in the model (1990).
+
+##Model diagnostics
+
