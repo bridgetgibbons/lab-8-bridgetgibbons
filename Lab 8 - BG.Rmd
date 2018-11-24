@@ -44,3 +44,34 @@ Y intercept is the initial value for year 0. That's concerning because it is fin
 
 ##Model diagnostics
 
+```{r}
+plot(salmon_model)
+
+#Residuals appear normally distributed for the most part, with some data points that could be potential outliers.
+
+par(mfrow = c(2,2))
+plot(salmon_model)
+
+```
+
+##Model fit and significance
+
+```{r}
+summary(salmon_model)
+```
+
+Year does significantly predict salmon imports. R2 value means the fraction of the variance in y that is explained by x, or the fraction of the variation in salmon imports that is explained by year. 6% is not explained by year.
+
+##Prepare a final graph
+
+```{r}
+salmon_final_graph <- ggplot(salmon, aes(x = year, y = salmon_fresh)) +
+  geom_point() +
+  geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+  theme_bw() +
+  scale_x_continuous(expand = c(0,0), limits = c(1990, 2017)) +
+  labs(x = "Year", y = "U.S. Annual Fresh Salmon Imports\n(1,000 Pounds)")
+
+salmon_final_graph
+```
+
