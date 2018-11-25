@@ -75,3 +75,28 @@ salmon_final_graph <- ggplot(salmon, aes(x = year, y = salmon_fresh)) +
 salmon_final_graph
 ```
 
+##Make predictions using the model
+
+```{r}
+new_years <- data.frame(year = c(2022, 2024, 2026, 2028))
+
+future_predict <- predict(salmon_model, newdata = new_years, interval = "confidence")
+future_predict
+
+predictions <- data.frame(new_years, future_predict)
+predictions
+```
+
+##Find Pearson's r (correlation)
+
+```{r}
+salmon_cor <- cor.test(salmon$year, salmon$salmon_fresh)
+salmon_cor
+```
+
+Pearson's r is 0.97. I would describe this as a strong positive correlation between year and salmon imports.
+
+##Concluding statement
+
+Year significantly predicts salmon imports (b = -1.5e07, t(26) = 21.7, p < 0.001) with a strong positive
+correlation between the two (Pearson’s r = 0.97). The overall model (Imports(tons) = -14982940 + 7550(Year)) explains a significant amount of variance in sepal width (F(1,26) = 471.9, p < 0.001, R2 = 0.95).
